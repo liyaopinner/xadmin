@@ -23,7 +23,7 @@ class IndexView(Dashboard):
 
 class UserSettingView(BaseAdminView):
 
-    @never_cache
+    # @never_cache
     def post(self, request):
         key = request.POST['key']
         val = request.POST['value']
@@ -80,7 +80,7 @@ class LogoutView(BaseAdminView):
     def update_params(self, defaults):
         pass
 
-    @never_cache
+    # @never_cache
     def get(self, request, *args, **kwargs):
         context = self.get_context()
         defaults = {
@@ -95,6 +95,6 @@ class LogoutView(BaseAdminView):
         # return logout(request, **defaults)
         return logout.as_view(**defaults)(request)
 
-    @never_cache
+    # @never_cache
     def post(self, request, *args, **kwargs):
         return self.get(request)
