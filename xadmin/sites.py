@@ -179,7 +179,7 @@ class AdminSite(object):
             raise ImproperlyConfigured("Put 'django.contrib.auth.context_processors.auth' "
                                        "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application.")
 
-    def admin_view(self, view, cacheable=False):
+    def admin_view(self, view, cacheable=True):
         """
         Decorator to create an admin view attached to this ``AdminSite``. This
         wraps the view and provides permission checking by calling
@@ -295,7 +295,7 @@ class AdminSite(object):
         if settings.DEBUG:
             self.check_dependencies()
 
-        def wrap(view, cacheable=False):
+        def wrap(view, cacheable=True):
             def wrapper(*args, **kwargs):
                 return self.admin_view(view, cacheable)(*args, **kwargs)
             wrapper.admin_site = self
