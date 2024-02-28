@@ -21,7 +21,12 @@
             </ul>
           </li>
         {% endif %}
-        <li><a href="{% url 'xadmin:logout' %}"><i class="show-sm fa fa-sign-out"></i><span class="hide-sm">{% trans 'Log out' %}</span></a></li>
+        <li>
+            <form action="{% url 'xadmin:logout' %}" method="post" style="background-color: transparent">
+                {% csrf_token %}
+                <button style="background-color: transparent; color: #999999;position: relative; display: block; padding: 10px 15px;" type="submit">{% trans 'Log out' %}</button>
+            </form>
+        </li>
       </ul>
       {% view_block 'top_navbar' %}
     </div>
