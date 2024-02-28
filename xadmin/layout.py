@@ -88,7 +88,7 @@ class InputGroup(layout.Field):
         }
         if hasattr(self, 'wrapper_class'):
             extra_context['wrapper_class'] = self.wrapper_class
-            
+
         return render_field(
             self.field, form, form_style, context, template=self.template,
             attrs=self.attrs, template_pack=template_pack, extra_context=extra_context, **kwargs)

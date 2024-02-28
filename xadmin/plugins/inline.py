@@ -26,7 +26,7 @@ class ShowField(Field):
         if admin_view.style == 'table':
             self.template = "xadmin/layout/field_value_td.html"
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(self, form, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
         html = ''
         detail = form.detail
         for field in self.fields:
@@ -38,11 +38,10 @@ class ShowField(Field):
 
 
 class DeleteField(Field):
-
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(self, form, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
         if form.instance.pk:
             self.attrs['type'] = 'hidden'
-            return super(DeleteField, self).render(form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs)
+            return super(DeleteField, self).render(form, context, template_pack=TEMPLATE_PACK, **kwargs)
         else:
             return ""
 
@@ -208,7 +207,7 @@ class InlineModelAdmin(ModelFormAdminView):
             elif type(layout) in (list, tuple) and len(layout) > 0:
                 layout = Layout(*layout)
 
-                rendered_fields = [i[1] for i in layout.get_field_names()]
+                rendered_fields = [i.name for i in layout.get_field_names()]
                 layout.extend([f for f in instance[0]
                                .fields.keys() if f not in rendered_fields])
 
@@ -337,7 +336,7 @@ class InlineFormset(Fieldset):
         self.flat_attrs = flatatt(kwargs)
         self.extra_attrs = formset.style.get_attrs()
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(self, form, context, template_pack=TEMPLATE_PACK, **kwargs):
         context = get_context_dict(context)
         context.update(dict(
             formset=self,
@@ -355,7 +354,7 @@ class Inline(Fieldset):
         self.fields = []
         super(Inline, self).__init__(legend="")
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(self, form, context, template_pack=TEMPLATE_PACK, **kwargs):
         return ""
 
 

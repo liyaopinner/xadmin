@@ -53,7 +53,7 @@ class ReadOnlyField(Field):
         self.detail = kwargs.pop('detail')
         super(ReadOnlyField, self).__init__(*args, **kwargs)
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(self, form, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
         html = ''
         for field in self.fields:
             result = self.detail.get_field_result(field)
